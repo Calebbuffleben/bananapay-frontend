@@ -10,7 +10,7 @@ import { apiErrorMessage } from '../../shared/api-error';
   imports: [FormsModule, RouterLink],
   template: `
     <main class="quiz">
-      <p class="brand-mark compact"><span class="banana">banana</span><span class="pay">pay</span></p>
+      <p class="brand-mark compact"><span class="nana">nana</span><span class="pay">pay</span></p>
       @if(loading()){<p class="muted">Carregando quiz...</p>}
       @else if(completed()){
         <div class="stage"><p class="eyebrow">Concluído</p><h1>Obrigado, {{ lead.name }}!</h1><p class="muted">Suas respostas foram recebidas.</p>@if(quiz()['product']?.slug){<a class="btn" [routerLink]="['/p', quiz()['product'].slug]">Conhecer a oferta</a>}</div>

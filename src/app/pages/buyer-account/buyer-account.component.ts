@@ -12,7 +12,7 @@ import { formatBrlFromCents } from '../../shared/money';
   imports: [RouterLink, BpIconComponent],
   template: `
     <main class="account">
-      <p class="brand-mark compact"><span class="banana">banana</span><span class="pay">pay</span></p>
+      <p class="brand-mark compact"><span class="nana">nana</span><span class="pay">pay</span></p>
       <header>
         <div>
           <p class="eyebrow">Minha conta</p>

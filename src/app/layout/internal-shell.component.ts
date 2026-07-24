@@ -28,7 +28,7 @@ type NavGroup = { label: string; items: NavItem[] };
       <aside class="sidebar" [class.open]="menuOpen()">
         <div class="sidebar-top">
           <a class="brand" [routerLink]="isAdmin ? '/admin/dashboard' : '/app/dashboard'" (click)="menuOpen.set(false)">
-            <span class="wordmark"><span class="banana">banana</span><span class="pay">pay</span></span>
+            <span class="wordmark"><span class="nana">nana</span><span class="pay">pay</span></span>
           </a>
           <p class="area">{{ isAdmin ? 'Admin' : 'Produtor' }}</p>
         </div>
@@ -79,7 +79,7 @@ type NavGroup = { label: string; items: NavItem[] };
           >
             <span></span><span></span>
           </button>
-          <strong class="wordmark"><span class="banana">banana</span><span class="pay">pay</span></strong>
+          <strong class="wordmark"><span class="nana">nana</span><span class="pay">pay</span></strong>
         </header>
         <main>
           <router-outlet />
@@ -136,7 +136,7 @@ type NavGroup = { label: string; items: NavItem[] };
       line-height: 1;
     }
 
-    .banana { color: var(--bp-banana); }
+    .nana { color: var(--bp-banana); }
     .pay { color: var(--bp-cream); }
 
     .area {
