@@ -1,0 +1,44 @@
+<section class="page">
+  <header class="top">
+    <div>
+      <h1>Dashboard</h1>
+      <p class="muted">Olá, {{ auth.user()?.name }}</p>
+    </div>
+    <div class="actions">
+      <a class="btn" routerLink="/app/products/new">Novo produto</a>
+      <button type="button" class="btn ghost" (click)="auth.logout()">Sair</button>
+    </div>
+  </header>
+
+  @if (loading()) {
+    <p>Carregando...</p>
+  } @else if (error()) {
+    <p class="error">{{ error() }}</p>
+  } @else if (products().length === 0) {
+    <p>Nenhum produto ainda. Crie o primeiro.</p>
+  } @else {
+    <div class="list">
+      @for (product of products(); track product.id) {
+        <article class="row">
+          <div>
+            <h2>{{ product.title }}</h2>
+            <p class="price">{{ formatBrl(product.priceCents) }}</p>
+          </div>
+          <div class="stats">
+            <span>{{ product.salesCount ?? 0 }} vendas</span>
+            <span>{{ formatBrl(product.revenueCents ?? 0) }}</span>
+          </div>
+          <div class="meta">
+            <a [href]="absoluteLink(product.link)" target="_blank" rel="noopener">
+              {{ absoluteLink(product.link) }}
+            </a>
+            <button type="button" class="linkish" (click)="copyLink(product)">
+              {{ copiedId() === product.id ? 'Copiado' : 'Copiar link' }}
+            </button>
+            <a [routerLink]="['/app/products', product.id, 'edit']">Editar</a>
+          </div>
+        </article>
+      }
+    </div>
+  }
+</section>

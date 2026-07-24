@@ -1,0 +1,46 @@
+<section class="auth-screen">
+  <div class="auth-stage">
+    <div class="brand-plane" aria-label="banana pay">
+      <p class="brand-mark">
+        <span class="banana">banana</span><span class="pay">pay</span>
+        <small>{{ buyerArea ? 'Conta do comprador' : 'Comece a vender' }}</small>
+      </p>
+      <h1>{{ buyerArea ? 'Crie sua conta de comprador.' : 'Sua loja, pronta para vender.' }}</h1>
+      <p class="lede">{{ buyerArea ? 'Acompanhe assinaturas com o mesmo e-mail da compra.' : 'Produtos, Pix, recorrência e afiliados — tudo no mesmo fluxo.' }}</p>
+    </div>
+
+    <div class="auth-panel">
+      <h2>Cadastro</h2>
+      <p class="muted">Crie sua conta {{ buyerArea ? 'de comprador' : 'de produtor' }}</p>
+
+      <form (ngSubmit)="submit()">
+        <label class="field">
+          Nome
+          <input type="text" name="name" [(ngModel)]="name" required minlength="2" autocomplete="name" />
+        </label>
+        <label class="field">
+          E-mail
+          <input type="email" name="email" [(ngModel)]="email" required autocomplete="email" />
+        </label>
+        <label class="field">
+          Senha
+          <input type="password" name="password" [(ngModel)]="password" required minlength="6" autocomplete="new-password" />
+        </label>
+        <label class="field">
+          Confirmar senha
+          <input type="password" name="confirmPassword" [(ngModel)]="confirmPassword" required minlength="6" autocomplete="new-password" />
+        </label>
+
+        @if (error()) {
+          <p class="error">{{ error() }}</p>
+        }
+
+        <button class="btn" type="submit" [disabled]="loading()">
+          {{ loading() ? 'Criando...' : 'Criar conta' }}
+        </button>
+      </form>
+
+      <p class="links">Já tem conta? <a [routerLink]="buyerArea ? '/conta/login' : '/login'">Entrar</a></p>
+    </div>
+  </div>
+</section>

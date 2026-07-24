@@ -1,0 +1,88 @@
+<section class="checkout-screen">
+  <header class="checkout-brand">
+    <p class="brand-mark compact">
+      <span class="banana">banana</span><span class="pay">pay</span>
+    </p>
+  </header>
+
+  @if (loading()) {
+    <p class="muted loading">Carregando oferta...</p>
+  } @else if (error() && !product()) {
+    <p class="error">{{ error() }}</p>
+  } @else if (product()) {
+    <div class="checkout-stage">
+      <div class="offer-plane">
+        @if (statusMessage()) {
+          <p class="status">{{ statusMessage() }}</p>
+          @if (subscriptionReturn()) {
+            <a class="account-link" href="/conta">Gerenciar assinatura</a>
+          }
+        }
+
+        <img [src]="product()!.imageUrl" [alt]="product()!.title" />
+        <h1>{{ product()!.title }}</h1>
+        <p class="desc">{{ product()!.description }}</p>
+        <p class="price">{{ formatBrl(product()!.priceCents) }}</p>
+      </div>
+
+      <div class="pay-panel">
+        <div class="buyer">
+          <label class="field">Nome<input [(ngModel)]="buyer.name" autocomplete="name" /></label>
+          <label class="field">E-mail<input type="email" [(ngModel)]="buyer.email" autocomplete="email" /></label>
+          <label class="field">WhatsApp<input [(ngModel)]="buyer.phone" autocomplete="tel" placeholder="5511999999999" /></label>
+          <label class="consent">
+            <input type="checkbox" [(ngModel)]="buyer.whatsappOptIn" />
+            Aceito receber atualizações desta compra por WhatsApp.
+          </label>
+        </div>
+
+        @if (product()!.offers.length) {
+          <fieldset>
+            <legend>Adicione à sua compra</legend>
+            @for (offer of product()!.offers; track offer.id) {
+              <label class="offer">
+                <input
+                  type="checkbox"
+                  (change)="toggleOffer(offer.id, $any($event.target).checked)"
+                />
+                <span><strong>{{ offer.name }}</strong><small>{{ formatBrl(offer.priceCents) }}</small></span>
+              </label>
+            }
+          </fieldset>
+        }
+
+        <fieldset>
+          <legend>Forma de pagamento</legend>
+          <div class="methods">
+            <label [class.on]="method === 'PIX'"><input type="radio" name="method" value="PIX" [(ngModel)]="method" /> Pix</label>
+            <label [class.on]="method === 'CARD'"><input type="radio" name="method" value="CARD" [(ngModel)]="method" /> Cartão</label>
+            <label [class.on]="method === 'BOLETO'"><input type="radio" name="method" value="BOLETO" [(ngModel)]="method" /> Boleto</label>
+          </div>
+        </fieldset>
+
+        @if (error()) {
+          <p class="error">{{ error() }}</p>
+        }
+
+        <button class="btn buy" type="button" (click)="buy()" [disabled]="buying()">
+          {{ buying() ? 'Redirecionando...' : 'Comprar agora' }}
+        </button>
+
+        @if (product()!.plans.length) {
+          <div class="plans">
+            <h2>Ou assine</h2>
+            @for (plan of product()!.plans; track plan.id) {
+              <article>
+                <div>
+                  <strong>{{ plan.name }}</strong>
+                  <small>{{ formatBrl(plan.amountCents) }} a cada {{ plan.intervalMonths }} mês(es)</small>
+                </div>
+                <button class="btn secondary" type="button" (click)="subscribe(plan.id)" [disabled]="buying()">Assinar</button>
+              </article>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  }
+</section>
